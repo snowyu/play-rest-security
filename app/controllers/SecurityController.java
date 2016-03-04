@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.User;
 import play.Logger;
 import play.data.Form;
+import play.data.DynamicForm;
 import play.data.validation.Constraints;
 import play.libs.F;
 import play.libs.Json;
@@ -24,16 +25,20 @@ public class SecurityController extends Controller {
     }
 
     // returns an authToken
-    public static Result login() {
+    public Result login() {
         Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
+        //DynamicForm loginForm = Form.form().bindFromRequest();
 
         if (loginForm.hasErrors()) {
             return badRequest(loginForm.errorsAsJson());
         }
 
         Login login = loginForm.get();
-
         User user = User.findByEmailAddressAndPassword(login.emailAddress, login.password);
+
+        // String emailAddress = loginForm.get("emailAddress");
+        // String password = loginForm.get("password");
+        // User user = User.findByEmailAddressAndPassword(emailAddress, password);
 
         if (user == null) {
             return unauthorized();
@@ -48,7 +53,7 @@ public class SecurityController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result logout() {
+    public Result logout() {
         response().discardCookie(AUTH_TOKEN);
         getUser().deleteAuthToken();
         return redirect("/");

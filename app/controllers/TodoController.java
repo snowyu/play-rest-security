@@ -1,6 +1,6 @@
 package controllers;
 
-import com.wordnik.swagger.annotations.*;
+import io.swagger.annotations.*;
 import models.Todo;
 import play.Logger;
 import play.data.Form;
@@ -18,7 +18,7 @@ public class TodoController extends Controller {
             notes = "Returns List of all Todos",
             response = Todo.class,
             httpMethod = "GET")
-    public static Result getAllTodos() {
+    public Result getAllTodos() {
         return ok(toJson(models.Todo.findByUser(SecurityController.getUser())));
     }
 
@@ -42,10 +42,10 @@ public class TodoController extends Controller {
     )
     @ApiResponses(
             value = {
-                    @com.wordnik.swagger.annotations.ApiResponse(code = 400, message = "Json Processing Exception")
+                    @io.swagger.annotations.ApiResponse(code = 400, message = "Json Processing Exception")
             }
     )
-    public static Result createTodo() {
+    public Result createTodo() {
         Form<models.Todo> form = Form.form(models.Todo.class).bindFromRequest();
         if (form.hasErrors()) {
             return badRequest(form.errorsAsJson());
@@ -57,5 +57,5 @@ public class TodoController extends Controller {
             return ok(toJson(todo));
         }
     }
-    
+
 }
