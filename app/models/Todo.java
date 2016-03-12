@@ -2,7 +2,8 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
+//import play.db.ebean.Model;
+import com.avaje.ebean.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Todo extends Model {
     @ManyToOne
     @JsonIgnore
     public User user;
-    
+
     public Todo(User user, String value) {
         this.user = user;
         this.value = value;

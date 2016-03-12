@@ -2,7 +2,8 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
+//import play.db.ebean.Model;
+import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
@@ -20,7 +21,7 @@ public class User extends Model {
     public Long id;
 
     private String authToken;
-    
+
     @Column(length = 256, unique = true, nullable = false)
     @Constraints.MaxLength(256)
     @Constraints.Required
@@ -73,13 +74,13 @@ public class User extends Model {
         authToken = null;
         save();
     }
-    
-    
+
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonIgnore
     public List<Todo> todos = new ArrayList<Todo>();
-    
-    
+
+
     public User() {
         this.creationDate = new Date();
     }
@@ -105,7 +106,7 @@ public class User extends Model {
     }
 
     public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
-    
+
     public static User findByAuthToken(String authToken) {
         if (authToken == null) {
             return null;
