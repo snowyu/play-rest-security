@@ -9,6 +9,7 @@ scalaVersion := "2.11.7"
 libraryDependencies ++= Seq(
 //  javaCore,
   javaJdbc,
+  //"mysql" % "mysql-connector-java" % "5.1.18" % "prod",
   "io.swagger" %% "swagger-play2" % "1.5.1",
   "org.webjars" % "swagger-ui" % "2.1.4"
 )
