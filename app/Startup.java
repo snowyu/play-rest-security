@@ -20,7 +20,7 @@ public class Startup {
   @Inject
   public Startup(Application application, ApplicationEvolutions evolutions) {
     //hook the ApplicationEvolutions to startup after evolutions.
-    //Logger.info("Startup Inject");
+    Logger.info("Startup Inject");
     // load the demo data in dev mode
     if (application.isDev() && (User.find.all().size() == 0)) {
         DemoData.loadDemoData();
